@@ -14,8 +14,12 @@ import (
   "github.com/lcraver/games-api/database"
 )
 
+type GameHandler interface {
+	getAll(w http.ResponseWriter, r *http.Request)
+  getByName(w http.ResponseWriter, r *http.Request)
+}
 
-func GameHandlerIndex(w http.ResponseWriter, r *http.Request) {
+func getAll(w http.ResponseWriter, r *http.Request) {
   results, err := database.DBCon.Query("SELECT * FROM games")
 
   games := make([]*models.Game, 0)
@@ -40,7 +44,7 @@ func GameHandlerIndex(w http.ResponseWriter, r *http.Request) {
   }
 }
 
-func GameHandler(w http.ResponseWriter, r *http.Request) {
+func getByName(w http.ResponseWriter, r *http.Request) {
 
   vars := mux.Vars(r)
   var name = vars["name"]

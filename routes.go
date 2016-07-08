@@ -26,12 +26,12 @@ var routes = Routes{
         "GameHandler",
         "GET",
         "/games/{name}",
-        handlers.GameHandler,
+        handlers.GH.getAll,
     },
     Route{
         "GameHandlerIndex",
         "GET",
         "/games",
-        handlers.GameHandlerIndex,
+        handlers.GH.getByName,
     },
 }
