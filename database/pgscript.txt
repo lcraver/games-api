@@ -1,0 +1,15 @@
+-- Table: games
+
+-- DROP TABLE games;
+
+CREATE TABLE games
+(
+  id serial,
+  title character varying(255),
+  CONSTRAINT games_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE games
+  OWNER TO postgres;

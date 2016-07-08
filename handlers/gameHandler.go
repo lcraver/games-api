@@ -14,18 +14,13 @@ import (
   "github.com/lcraver/games-api/database"
 )
 
-type GameHandler interface {
-	getAll(w http.ResponseWriter, r *http.Request)
-  getByName(w http.ResponseWriter, r *http.Request)
-}
-
-func getAll(w http.ResponseWriter, r *http.Request) {
+func GetAll(w http.ResponseWriter, r *http.Request) {
   results, err := database.DBCon.Query("SELECT * FROM games")
 
   games := make([]*models.Game, 0)
   for results.Next() {
     game := new(models.Game)
-    err := results.Scan(&game.Name, &game.Id, &game.Price)
+    err := results.Scan(&game.Id, &game.Title)
     if err != nil {
       fmt.Println(err);
       return
@@ -44,15 +39,15 @@ func getAll(w http.ResponseWriter, r *http.Request) {
   }
 }
 
-func getByName(w http.ResponseWriter, r *http.Request) {
+func GetByName(w http.ResponseWriter, r *http.Request) {
 
   vars := mux.Vars(r)
-  var name = vars["name"]
+  var title = vars["title"]
 
   game := new(models.Game);
 
-  query, err := database.DBCon.Prepare("SELECT * FROM games WHERE name=$1")
-  err = query.QueryRow(name).Scan(&game.Name, &game.Id, &game.Price);
+  query, err := database.DBCon.Prepare("SELECT * FROM games WHERE title=$1")
+  err = query.QueryRow(title).Scan(&game.Id, &game.Title);
 
   w.Header().Set("Content-Type", "application/json; charset=UTF-8")
   w.WriteHeader(http.StatusOK)
