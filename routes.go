@@ -25,7 +25,13 @@ var routes = Routes{
     Route{
         "GameHandler",
         "GET",
-        "/games/{id}",
+        "/games/{name}",
         handlers.GameHandler,
+    },
+    Route{
+        "GameHandlerIndex",
+        "GET",
+        "/games",
+        handlers.GameHandlerIndex,
     },
 }
